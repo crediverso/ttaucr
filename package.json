@@ -1,0 +1,24 @@
+{
+  "name": "ttaucr",
+  "version": "1.0.0",
+  "description": "Util class to communicate between browser tabs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crediverso/ttaucr.git"
+  },
+  "keywords": [
+    "encryption",
+    "js",
+    "ttaucr"
+  ],
+  "author": "ImLuyou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/crediverso/ttaucr.git"
+  },
+  "homepage": "https://github.com/crediverso/ttaucr.git#readme"
+}
