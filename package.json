@@ -1,6 +1,6 @@
 {
   "name": "ttaucr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Util class to communicate between browser tabs",
   "main": "index.js",
   "scripts": {
