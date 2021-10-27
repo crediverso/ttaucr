@@ -1,4 +1,4 @@
-module.exports = class TTAUCR {
+class TTAUCR {
     constructor() {
         this.init = true;
     }
@@ -10,4 +10,12 @@ module.exports = class TTAUCR {
     returnTrue() {
         return true;
     }
+
+    send() {
+        // This will send a postMessage
+    }
 } 
+
+module.exports = {
+    TTAUCR
+}
