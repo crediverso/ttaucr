@@ -1,4 +1,4 @@
-class TTAUCR {
+class Util {
     constructor() {
         this.init = true;
     }
@@ -15,7 +15,6 @@ class TTAUCR {
         // This will send a postMessage
     }
 } 
-
 module.exports = {
-    TTAUCR
-}
+    Util
+};

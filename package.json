@@ -1,21 +1,17 @@
 {
   "name": "ttaucr",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Util class to communicate between browser tabs",
-  "main": "index.js",
+  "main": "umd/index.bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx webpack"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/crediverso/ttaucr.git"
   },
-  "keywords": [
-    "encryption",
-    "js",
-    "ttaucr"
-  ],
+  "keywords": [],
   "author": "ImLuyou",
   "license": "MIT",
   "bugs": {
@@ -23,6 +19,9 @@
   },
   "homepage": "https://github.com/crediverso/ttaucr.git#readme",
   "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "babel-loader": "^8.2.3",
     "webpack": "^5.60.0",
     "webpack-cli": "^4.9.1"
   }

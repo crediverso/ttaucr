@@ -1,15 +1,22 @@
-const path = require('path');
+const path = require("path")
 
 module.exports = {
-    entry: './index.js',
-    output: {
-        filename: 'ttaucr.js',
-        path: path.resolve(__dirname, 'umd'),
-        library: {
-            type: 'umd',
-            name: 'add',
-        },
-        // prevent error: `Uncaught ReferenceError: self is not define`
-        globalObject: 'this',
-    },
-};
+  entry: path.resolve(__dirname, "src/index.js"),
+  output: {
+    path: path.resolve(__dirname, "umd"),
+    filename: "index.bundle.js",
+    library: "TTAUCR",
+    libraryTarget: "umd",
+    globalObject: 'this'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: "babel-loader",
+      },
+    ],
+  },
+  mode: "development",
+}
