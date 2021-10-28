@@ -11,8 +11,13 @@ class Util {
         return true;
     }
 
-    send() {
+    send(message = '', recipient = '*') {
         // This will send a postMessage
+        return window.postMessage(message, recipient);
+    }
+
+    receive(callback = (event) => {}, options = false) {
+        return window.addEventListener("message", callback, options);
     }
 } 
 module.exports = {
