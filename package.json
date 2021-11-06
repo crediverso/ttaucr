@@ -1,6 +1,6 @@
 {
   "name": "ttaucr",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Util class to communicate between browser tabs",
   "main": "umd/index.bundle.js",
   "scripts": {
