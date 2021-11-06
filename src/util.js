@@ -1,7 +1,10 @@
+let liveInstances = {};
 class Util {
     constructor() {
         this.init = true;
-        window.liveInstances = {};
+        this.lorem = 'lorem 2';
+        
+        liveInstances = {};
     }
 
     get classInitiated() {
@@ -9,22 +12,22 @@ class Util {
     }
 
     get existentWindows() {
-        return window.liveInstances;
+        return liveInstances;
     }
 
-    returnTrue() {
+    static returnTrue() {
         return true;
     }
 
-    closeWindows(windowChannel = false) {
+    static closeWindows(windowChannel = false) {
         try {
             if (windowChannel) {
-                window.liveInstances[windowChannel].close();
+                liveInstances[windowChannel].close();
 
-                delete window.liveInstances[windowChannel];
+                delete liveInstances[windowChannel];
             } else {
-                for(let window in window.liveInstances) {
-                    window.liveInstances[window].close();
+                for(let window in liveInstances) {
+                    liveInstances[window].close();
                 }
 
                 window.liveInstance = {};
@@ -34,7 +37,7 @@ class Util {
         }
     }
 
-    waitForDefinition(varToBeWatched = '', timeoutms = 15000) {
+    static waitForDefinition(varToBeWatched = '', timeoutms = 15000) {
         let timeInterval = null;
         let timeoutFlag = false;
         let timeout = null;
@@ -54,53 +57,54 @@ class Util {
         });
     }
 
-    createWindow(targetURL = '*') {
+    static createWindow(targetURL = '*') {
         return new Promise((resolve, reject) => {
             try {
-                window.liveInstances[targetURL] = window.open(targetURL, 'modal', 'width=350,height=450');
-                resolve(window.liveInstances[targetURL]);
+                liveInstances[targetURL] = window.open(targetURL, 'modal', 'width=350,height=450');
+                resolve(liveInstances[targetURL]);
             } catch(e) {
                 reject(e);
             }
         });
     }
 
-    async send(message = '', targetURL = '*', channel = 'default', encodeToBase64 = true) {
-
+    static send(message = '', targetURL = '*', channel = 'default', encodeToBase64 = true) {
         let self = this;
-
-        if (!window.liveInstances.hasOwnProperty(channel)) {
-            let childWindow = await self.createWindow(targetURL);
-            window.liveInstances[channel] = childWindow;
-
-            let readyFlag = await self.waitForDefinition(window.liveInstances[channel].document.body)
-
-            if (readyFlag) {
-                window.liveInstances[channel].document.title = channel;
-                window.liveInstances[channel].postMessage(
-                    self.createMessageObject(message, channel, encodeToBase64), 
-                    targetURL);
-            }
-        } else {
-            if (window.liveInstances[channel].closed) {
-                delete window.liveInstances[channel];
-                self.send(message, targetURL, channel, false);
+        console.log('lorem', liveInstances);
+        (async () => {
+            if (!liveInstances.hasOwnProperty(channel)) {
+                let childWindow = await self.createWindow(targetURL);
+                liveInstances[channel] = childWindow;
+    
+                let readyFlag = await self.waitForDefinition(liveInstances[channel].document.body)
+    
+                if (readyFlag) {
+                    liveInstances[channel].document.title = channel;
+                    liveInstances[channel].postMessage(
+                        self.createMessageObject(message, channel, encodeToBase64), 
+                        targetURL);
+                }
             } else {
-                window.liveInstances[channel].postMessage(
-                    self.createMessageObject(message, channel, encodeToBase64), 
-                    targetURL);
+                if (liveInstances[channel].closed) {
+                    delete liveInstances[channel];
+                    self.send(message, targetURL, channel, false);
+                } else {
+                    liveInstances[channel].postMessage(
+                        self.createMessageObject(message, channel, encodeToBase64), 
+                        targetURL);
+                }
+                
             }
-            
-        } 
+        })();
     }
 
-    createMessageObject(message = '', channel = 'default',  encodeToBase64 = true) {
+    static createMessageObject(message = '', channel = 'default',  encodeToBase64 = true) {
         let messageObject = {};
             messageObject[channel] = (encodeToBase64 ? btoa(message) : message);
         return messageObject;
     }
 
-    listen(channel, callback = (event) => {}, options = false) {
+    static listen(channel, callback = (event) => {}, options = false) {
         return window.addEventListener("message", (event) => {
             try {
                 let data = event.data[channel];
@@ -111,7 +115,6 @@ class Util {
             
         }, options);
     }
-} 
-module.exports = {
-    Util
-};
+}
+
+export default Util;

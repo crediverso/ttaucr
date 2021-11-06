@@ -1,6 +1,6 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 
-import { Util } from "./util";
+import Util from "./util";
 
-export { Util }
+export default Util;
