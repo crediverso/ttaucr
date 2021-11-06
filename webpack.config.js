@@ -7,7 +7,6 @@ module.exports = {
     filename: "index.bundle.js",
     library: "TTAUCR",
     libraryTarget: "umd",
-    globalObject: 'this'
   },
   module: {
     rules: [

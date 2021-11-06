@@ -1,4 +1,3 @@
-'use strict';
 class Util {
     constructor() {
         this.init = true;
@@ -68,25 +67,27 @@ class Util {
 
     async send(message = '', targetURL = '*', channel = 'default', encodeToBase64 = true) {
 
+        let self = this;
+
         if (!window.liveInstances.hasOwnProperty(channel)) {
-            let childWindow = await this.createWindow(targetURL);
+            let childWindow = await self.createWindow(targetURL);
             window.liveInstances[channel] = childWindow;
 
-            let readyFlag = await this.waitForDefinition(window.liveInstances[channel].document.body)
+            let readyFlag = await self.waitForDefinition(window.liveInstances[channel].document.body)
 
             if (readyFlag) {
                 window.liveInstances[channel].document.title = channel;
                 window.liveInstances[channel].postMessage(
-                    this.createMessageObject(message, channel, encodeToBase64), 
+                    self.createMessageObject(message, channel, encodeToBase64), 
                     targetURL);
             }
         } else {
             if (window.liveInstances[channel].closed) {
                 delete window.liveInstances[channel];
-                this.send(message, targetURL, channel, false);
+                self.send(message, targetURL, channel, false);
             } else {
                 window.liveInstances[channel].postMessage(
-                    this.createMessageObject(message, channel, encodeToBase64), 
+                    self.createMessageObject(message, channel, encodeToBase64), 
                     targetURL);
             }
             
