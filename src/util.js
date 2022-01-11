@@ -70,20 +70,23 @@ class Util {
 
     static send(message = '', targetURL = '*', channel = 'default', encodeToBase64 = true) {
         let self = this;
-        console.log('lorem', liveInstances);
+
         (async () => {
             if (!liveInstances.hasOwnProperty(channel)) {
                 let childWindow = await self.createWindow(targetURL);
                 liveInstances[channel] = childWindow;
     
-                let readyFlag = await self.waitForDefinition(liveInstances[channel].document.body)
-    
-                if (readyFlag) {
-                    liveInstances[channel].document.title = channel;
-                    liveInstances[channel].postMessage(
-                        self.createMessageObject(message, channel, encodeToBase64), 
-                        targetURL);
-                }
+                let readyFlag = await self.waitForDefinition(liveInstances[channel].document.body);
+                
+                setTimeout(() => {
+                    if (readyFlag) {
+                        liveInstances[channel].document.title = channel;
+                        liveInstances[channel].postMessage(
+                            self.createMessageObject(message, channel, encodeToBase64), 
+                            targetURL);
+                    }
+                }, 4500);
+                
             } else {
                 if (liveInstances[channel].closed) {
                     delete liveInstances[channel];
@@ -105,6 +108,7 @@ class Util {
     }
 
     static listen(channel, callback = (event) => {}, options = false) {
+        
         return window.addEventListener("message", (event) => {
             try {
                 let data = event.data[channel];
