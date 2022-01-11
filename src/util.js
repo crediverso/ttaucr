@@ -1,9 +1,11 @@
+let appPackage = require('../package.json');
 let liveInstances = {};
 class Util {
     constructor() {
         this.init = true;
-        this.lorem = 'lorem 2';
-        
+        this.version = appPackage.version;
+        console.log('ttaucr has been loaded successfully on: ', this.version);
+
         liveInstances = {};
     }
 
