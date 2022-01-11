@@ -21,6 +21,10 @@ class Util {
         return true;
     }
 
+    static returnVersion() {
+        return this.version;
+    }
+
     static closeWindows(windowChannel = false) {
         try {
             if (windowChannel) {
@@ -74,7 +78,7 @@ class Util {
         let self = this;
 
         (async () => {
-            if (!liveInstances.hasOwnProperty(channel) && typeof liveInstances[channel] !== null) {
+            if (!liveInstances.hasOwnProperty(channel) && typeof liveInstances[channel] == null) {
                 let childWindow = await self.createWindow(targetURL);
                 liveInstances[channel] = childWindow;
     
