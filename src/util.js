@@ -1,10 +1,8 @@
-let appPackage = require('../package.json');
 let liveInstances = {};
+
 class Util {
     constructor() {
         this.init = true;
-        this.version = appPackage.version;
-        console.log('ttaucr has been loaded successfully on: ', this.version);
 
         liveInstances = {};
     }
@@ -19,10 +17,6 @@ class Util {
 
     static returnTrue() {
         return true;
-    }
-
-    static returnVersion() {
-        return this.version;
     }
 
     static closeWindows(windowChannel = false) {
@@ -66,8 +60,8 @@ class Util {
     static createWindow(targetURL = '*') {
         return new Promise((resolve, reject) => {
             try {
-                liveInstances[targetURL] = window.open(targetURL, 'modal', 'width=350,height=450');
-                resolve(liveInstances[targetURL]);
+                let auxWindow = window.open(targetURL, 'modal', 'width=350,height=450');
+                resolve(auxWindow);
             } catch(e) {
                 reject(e);
             }
@@ -78,11 +72,11 @@ class Util {
         let self = this;
 
         (async () => {
-            if (!liveInstances.hasOwnProperty(channel) && typeof liveInstances[channel] == null) {
+            if (!liveInstances.hasOwnProperty(channel)) {
                 let childWindow = await self.createWindow(targetURL);
                 liveInstances[channel] = childWindow;
     
-                let readyFlag = await self.waitForDefinition(liveInstances[channel].document.body);
+                let readyFlag = await self.waitForDefinition(liveInstances?.channel?.document?.body);
                 
                 setTimeout(() => {
                     if (readyFlag) {
