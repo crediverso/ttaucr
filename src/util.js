@@ -72,7 +72,7 @@ class Util {
         let self = this;
 
         (async () => {
-            if (!liveInstances.hasOwnProperty(channel)) {
+            if (!liveInstances.hasOwnProperty(channel) && typeof liveInstances[channel] !== null) {
                 let childWindow = await self.createWindow(targetURL);
                 liveInstances[channel] = childWindow;
     
